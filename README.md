@@ -1,59 +1,141 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# CampusKart 2.0 — API
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+A RESTful backend for **CampusKart 2.0**, a campus marketplace designed to connect students who want to buy and sell products within their university communities.
 
-## About Laravel
+Built with Laravel, this API is maintained separately from the Vue.js frontend to keep the application's backend logic and user interface independent.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Project Overview
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+CampusKart 2.0 aims to provide students with a platform to discover products, create listings, manage their accounts, and interact with a marketplace tailored to campus communities.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+The Laravel API will handle data persistence, authentication, authorization, validation, and marketplace business logic. The Vue frontend will consume the API over HTTP.
 
-## Learning Laravel
+## Tech Stack
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+- **Laravel 12** — Backend framework
+- **PHP** — Backend programming language
+- **MySQL** — Relational database
+- **Laravel Sanctum** — Authentication support
+- **Spatie Laravel Permission** — Role and permission management
+- **Laravel Migrations** — Database schema management
+- **PHPUnit / Laravel Testing** — Automated testing
+- **Composer** — PHP dependency management
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## Architecture
 
-## Laravel Sponsors
+CampusKart 2.0 uses a separated frontend and backend architecture:
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+- **Frontend:** Vue 3 with JavaScript
+- **Backend:** Laravel REST API
+- **Database:** MySQL
+- **Communication:** HTTP requests between the frontend and backend
 
-### Premium Partners
+The backend is responsible for enforcing validation, authentication, authorization, and business rules rather than relying on frontend checks alone.
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+## Getting Started
 
-## Contributing
+### Prerequisites
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+Make sure you have installed:
 
-## Code of Conduct
+- PHP 8.2 or a compatible version supported by the project
+- Composer
+- MySQL
+- Git
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+### 1. Clone the repository
 
-## Security Vulnerabilities
+```bash
+git clone git@github.com:mohammedjodi/CampusKart2.0-API.git
+cd CampusKart2.0-API
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### 2. Install dependencies
 
-## License
+```bash
+composer install
+```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+### 3. Configure environment variables
+
+Create your local environment file:
+
+```bash
+cp .env.example .env
+```
+
+Update the database settings in `.env` to match your local MySQL configuration.
+
+Generate an application key if one has not already been generated:
+
+```bash
+php artisan key:generate
+```
+### 4. Run database migrations
+
+```bash
+php artisan migrate
+```
+
+### 5. Start the development server
+
+```bash
+php artisan serve
+```
+
+### 6. Run automated tests
+
+```bash
+php artisan test
+```
+
+## Authentication and Authorization
+
+Authentication and authorization are foundational parts of the project.
+
+The project includes Laravel Sanctum for authentication support and Spatie Laravel Permission for role and permission management.
+
+The authentication flow, API protection, role assignments, and authorization policies will be implemented and tested as the application develops.
+
+The intended design is to keep sensitive operations protected by backend authorization checks.
+
+## Development Roadmap
+
+- [x] Initialize the Laravel project
+- [x] Configure database connectivity
+- [x] Run initial database migrations
+- [x] Install Laravel Sanctum
+- [x] Install Spatie Laravel Permission
+- [x] Verify the initial automated tests
+- [ ] Design and implement the database schema
+- [ ] Define API routes and resource controllers
+- [ ] Implement registration and login
+- [ ] Configure authentication and authorization middleware
+- [ ] Implement user profiles and account management
+- [ ] Build product and category endpoints
+- [ ] Implement listing creation, updates, and status management
+- [ ] Add image upload handling
+- [ ] Expand automated feature and authorization tests
+- [ ] Configure production deployment
+
+## Testing
+
+Automated tests will be used to verify API behavior, request validation, authentication, authorization, and important marketplace workflows.
+
+Run the test suite with:
+
+```bash
+php artisan test
+```
+
+## Project Goal
+
+The goal is to build a secure, maintainable, and production-minded API that supports the CampusKart marketplace while remaining independent of the frontend implementation.
+
+Development will emphasize clear separation of responsibilities, reliable validation, appropriate access control, automated testing, and maintainable code.
+
+## Author
+
+**Mohammed Jodi**
+
+GitHub: @mohammedjodi
