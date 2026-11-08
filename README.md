@@ -107,7 +107,7 @@ The intended design is to keep sensitive operations protected by backend authori
 - [x] Install Laravel Sanctum
 - [x] Install Spatie Laravel Permission
 - [x] Verify the initial automated tests
-- [ ] Design and implement the database schema
+- [X] Design and implement the database schema
 - [ ] Define API routes and resource controllers
 - [ ] Implement registration and login
 - [ ] Configure authentication and authorization middleware
