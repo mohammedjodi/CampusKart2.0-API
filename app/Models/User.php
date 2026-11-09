@@ -7,6 +7,9 @@ use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class User extends Authenticatable
 {
@@ -19,8 +22,14 @@ class User extends Authenticatable
      * @var list<string>
      */
     protected $fillable = [
-        'name',
+        'first_name',
+        'last_name',
+        'username',
         'email',
+        'phone',
+        'avatar',
+        'bio',
+        'university_id',
         'password',
     ];
 
@@ -45,5 +54,26 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    //Relationships bewtween User and Product
+    public function products(): HasMany
+    {
+        return $this->hasMany(Product::class, 'user_id' , 'id');
+    }
+
+    public function favorites(): BelongsToMany
+    {
+        return $this->belongsToMany(
+            Product::class,
+            'favorites',
+            'user_id',
+            'product_id'
+        )->withTimestamps();
+    }
+
+    public function university(): BelongsTo
+    {
+        return $this->belongsTo(University::class, 'university_id', 'id');
     }
 }
