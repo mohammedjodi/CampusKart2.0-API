@@ -109,6 +109,7 @@ The intended design is to keep sensitive operations protected by backend authori
 - [x] Verify the initial automated tests
 - [X] Design and implement the database schema
 - [x] Define Models and Add Model Relationships
+- [x] Add Default Seeders to DB
 - [ ] Define API routes and resource controllers
 - [ ] Implement registration and login
 - [ ] Configure authentication and authorization middleware
