@@ -110,6 +110,7 @@ The intended design is to keep sensitive operations protected by backend authori
 - [X] Design and implement the database schema
 - [x] Define Models and Add Model Relationships
 - [x] Add Default Seeders to DB
+- [x] Configure Sanctum For Authentication and CORS 
 - [ ] Define API routes and resource controllers
 - [ ] Implement registration and login
 - [ ] Configure authentication and authorization middleware
