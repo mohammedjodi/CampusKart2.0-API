@@ -15,29 +15,61 @@ class CreateNewUser implements CreatesNewUsers
 
     /**
      * Validate and create a newly registered user.
-     *
+     * 
      * @param  array<string, string>  $input
      *
      * @throws ValidationException
      */
     public function create(array $input): User
     {
-        Validator::make($input, [
-            'name' => ['required', 'string', 'max:255'],
+       $validated =  Validator::make($input, [
+            'first_name' => ['required', 'string', 'min:3', 'max:255'],
+
+            'last_name' => ['required', 'string', 'min:3', 'max:255'],
+
+            'username' => [
+                'required',
+                'string',
+                'min:3',
+                'max:255',
+                Rule::unique('users', 'username'),
+            ],
+
             'email' => [
                 'required',
                 'string',
                 'email',
                 'max:255',
-                Rule::unique(User::class),
+                Rule::unique('users', 'email'),
             ],
+
+            'phone' => ['required', 'string', 'max:20'],
+
+            'university_id' => [
+                'required',
+                'integer',
+                Rule::exists('universities', 'id'),
+            ],
+
+            'bio' => ['nullable', 'string', 'max:500'],
+
+            'avatar' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:2048'],
+
             'password' => $this->passwordRules(),
+
         ])->validate();
 
+        // Store the validated data in the database and return the created user instance
         return User::create([
-            'name' => $input['name'],
-            'email' => $input['email'],
-            'password' => Hash::make($input['password']),
+            'first_name' => $validated['first_name'],
+            'last_name' => $validated['last_name'],
+            'username' => $validated['username'],
+            'email' => $validated['email'],
+            'phone' => $validated['phone'],
+            'university_id' => $validated['university_id'],
+            'bio' => $validated['bio'] ?? null,
+            'avatar' => $validated['avatar'] ?? null,
+            'password' => $validated['password'],
         ]);
     }
 }

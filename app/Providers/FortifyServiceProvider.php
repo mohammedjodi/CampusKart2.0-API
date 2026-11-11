@@ -14,6 +14,9 @@ use Illuminate\Support\Str;
 use Laravel\Fortify\Actions\RedirectIfTwoFactorAuthenticatable;
 use Laravel\Fortify\Fortify;
 
+use App\Models\User;
+use Illuminate\Support\Facades\Hash;
+
 class FortifyServiceProvider extends ServiceProvider
 {
     /**
@@ -30,13 +33,29 @@ class FortifyServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Fortify::createUsersUsing(CreateNewUser::class);
+
+        Fortify::authenticateUsing(function (Request $request) {
+            // Retrieve the user by their username or email
+            $user = User::where('email', $request->input('login'))
+                ->orWhere('username', $request->input('login'))
+                ->first();
+
+            // Check if the user exists and the provided password matches the hashed password in the database
+            if ($user && Hash::check($request->input('password'), $user->password)) {
+                return $user;
+            }
+
+            return null;
+        });
+
         Fortify::updateUserProfileInformationUsing(UpdateUserProfileInformation::class);
         Fortify::updateUserPasswordsUsing(UpdateUserPassword::class);
         Fortify::resetUserPasswordsUsing(ResetUserPassword::class);
         Fortify::redirectUserForTwoFactorAuthenticationUsing(RedirectIfTwoFactorAuthenticatable::class);
 
         RateLimiter::for('login', function (Request $request) {
-            $throttleKey = Str::transliterate(Str::lower($request->input(Fortify::username())).'|'.$request->ip());
+            // Use the login input (username or email) and the user's IP address to create a unique throttle key
+            $throttleKey = Str::transliterate(Str::lower($request->input('login')).'|'.$request->ip());
 
             return Limit::perMinute(5)->by($throttleKey);
         });
