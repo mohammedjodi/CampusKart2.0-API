@@ -15,7 +15,37 @@ return [
     |
     */
 
-    'paths' => ['api/*', 'sanctum/csrf-cookie'],
+    'paths' => ['api/*', 
+                'sanctum/csrf-cookie',
+
+                 // Fortify authentication
+                'login',
+                'logout',
+                'register',
+
+                // Password management
+                'forgot-password',
+                'reset-password',
+                'user/password',
+                'user/confirm-password',
+                'user/confirmed-password-status',
+
+                // Profile management
+                'user/profile-information',
+
+                // Two-factor authentication
+                'two-factor-challenge',
+                'user/two-factor-authentication',
+                'user/confirmed-two-factor-authentication',
+                'user/two-factor-qr-code',
+                'user/two-factor-recovery-codes',
+                'user/two-factor-secret-key',
+
+                // Passkeys
+                'passkeys/*',
+                'user/passkeys/*',
+                
+                ],
 
     'allowed_methods' => ['*'],
 
